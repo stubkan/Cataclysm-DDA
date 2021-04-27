@@ -4368,11 +4368,12 @@ void overmap::place_mongroups()
     // Cities are full of zombies
     for( city &elem : cities ) {
         if( get_option<bool>( "WANDER_SPAWNS" ) ) {
-            if( !one_in( 16 ) || elem.size > 5 ) {
+            if( !one_in( 16 ) || elem.size > 2 ) {
                 mongroup m( GROUP_ZOMBIE,
                             tripoint_om_sm( project_to<coords::sm>( elem.pos ), 0 ),
-                            static_cast<int>( elem.size * 2.5 ),
-                            elem.size * 80 );
+                            // Guessing total area of city in tiles, then setting density of 8 horde zeds per city tile
+                            static_cast<int>( (elem.size * elem.size) * 3.14 ) ,
+                            elem.size * 8 );
                 //                m.set_target( zg.back().posx, zg.back().posy );
                 m.horde = true;
                 m.wander( *this );
