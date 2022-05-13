@@ -815,6 +815,11 @@ int Character::fire_gun( const tripoint &target, int shots, item &gun )
         const vehicle *in_veh = has_effect( effect_on_roof ) ? veh_pointer_or_null( here.veh_at(
                                     pos() ) ) : nullptr;
 
+        // Add gunshot noise if player is the one who shot
+        const item::sound_data gunnoise = gun.gun_noise( shots > 1 );
+        add_msg_if_player( _( "You shoot your %1$s. %2$s" ), gun.tname(),
+                           uppercase_first_letter( gunnoise.sound ) );
+
         weakpoint_attack wp_attack;
         wp_attack.weapon = &gun;
         projectile proj = make_gun_projectile( gun );
