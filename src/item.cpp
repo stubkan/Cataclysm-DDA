@@ -6412,7 +6412,6 @@ int item::price( bool practical ) const
         if( e->count_by_charges() || e->made_of( phase_id::LIQUID ) ) {
             // price from json data is for default-sized stack
             child *= e->charges / static_cast<double>( e->type->stack_size );
-
         } else if( e->magazine_integral() && e->ammo_remaining() && e->ammo_data() ) {
             // items with integral magazines may contain ammunition which can affect the price
             child += item( e->ammo_data(), calendar::turn, e->ammo_remaining() ).price( practical );
@@ -6421,7 +6420,10 @@ int item::price( bool practical ) const
             // if tool has no ammo (e.g. spray can) reduce price proportional to remaining charges
             child *= e->ammo_remaining() / static_cast<double>( std::max( e->type->charges_default(), 1 ) );
         }
-
+        if( child < 1 ) {
+            // Prevent items that are free
+            child = 1;
+        }
         res += child;
         return VisitResponse::NEXT;
     } );
@@ -6453,7 +6455,10 @@ int item::price_no_contents( bool practical ) const
         price *= ammo_remaining() / static_cast< double >( std::max( type->charges_default(), 1 ) );
 
     }
-
+    if( price < 1 ) {
+        // Prevent items that are free
+        price++;
+    }
     return price;
 }
 
