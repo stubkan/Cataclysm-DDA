@@ -136,16 +136,15 @@ double npc_trading::net_price_adjustment( const Character &buyer, const Characte
 {
     // Adjust the prices based on your social skill.
     // cap adjustment so nothing is ever sold below value
-    ///\EFFECT_INT_NPC slightly increases bartering price changes, relative to your INT
 
-    ///\EFFECT_BARTER_NPC increases bartering price changes, relative to your BARTER
-
-    ///\EFFECT_INT slightly increases bartering price changes, relative to NPC INT
-
-    ///\EFFECT_BARTER increases bartering price changes, relative to NPC BARTER
-    double adjust = 0.05 * ( seller.int_cur - buyer.int_cur ) +
-                    price_adjustment( seller.get_skill_level( skill_speech ) -
-                                      buyer.get_skill_level( skill_speech ) );
+    // Boost the NPC selling/buying power
+    double selladjust = 0.05;
+    double buyadjust = 0.05;
+    if( seller.is_npc() ) {
+        selladjust = 0.2;
+    }
+    double adjust = ( ( selladjust * seller.int_cur ) - ( buyadjust * buyer.int_cur ) ) +
+                    price_adjustment( seller.get_skill_level( skill_speech ) - buyer.get_skill_level( skill_speech ) );
     return std::max( adjust, 1.0 );
 }
 
@@ -168,6 +167,9 @@ int npc_trading::adjusted_price( item const *it, int amount, Character const &bu
     if( it->count_by_charges() and amount >= 0 ) {
         price /= it->charges;
         price *= amount;
+        if( price < 1 ) {
+            price = 1 * amount;
+        }
     }
     if( buyer.is_npc() ) {
         price = buyer.as_npc()->value( *it, price );
@@ -221,6 +223,9 @@ void item_pricing::set_values( int ip_count )
         charges = i_p->count();
         if( charges > 0 ) {
             price /= charges;
+            if( price < 1 ) {
+                price = 1;
+            }
             vol /= charges;
             weight /= charges;
         } else {
