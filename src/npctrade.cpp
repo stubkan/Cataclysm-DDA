@@ -138,6 +138,9 @@ double npc_trading::net_price_adjustment( const Character &buyer, const Characte
     // cap adjustment so nothing is ever sold below value
 
     // Boost the NPC selling/buying power
+    // average (a+b)/2;
+
+    //    double average = ( seller.int_cur + buyer.int_cur ) / 2;
     double selladjust = 0.05;
     double buyadjust = 0.05;
     if( seller.is_npc() ) {
@@ -167,9 +170,6 @@ int npc_trading::adjusted_price( item const *it, int amount, Character const &bu
     if( it->count_by_charges() and amount >= 0 ) {
         price /= it->charges;
         price *= amount;
-        if( price < 1 ) {
-            price = 1 * amount;
-        }
     }
     if( buyer.is_npc() ) {
         price = buyer.as_npc()->value( *it, price );
