@@ -146,6 +146,7 @@ void invalid( Character &you, const tripoint &examp );
 bool pour_into_keg( const tripoint &pos, item &liquid );
 cata::optional<tripoint> getGasPumpByNumber( const tripoint &p, int number );
 bool toPumpFuel( const tripoint &src, const tripoint &dst, int units );
+fuel_station_fuel_type getNearestPumpType( const tripoint &center );
 cata::optional<tripoint> getNearFilledGasTank( const tripoint &center, int &fuel_units,
         fuel_station_fuel_type &fuel_type );
 

@@ -503,7 +503,7 @@ void iexamine::gaspump( Character &you, const tripoint &examp )
             return;
         }
     }
-    add_msg( m_info, _( "Out of order." ) );
+    add_msg( m_info, _( "The display indicates its out of gas." ) );
 }
 
 static bool has_attunement_spell_prereqs( Character &you, const trait_id &attunement )
@@ -4328,17 +4328,35 @@ static int getNearPumpCount( const tripoint &p, fuel_station_fuel_type &fuel_typ
 {
     int result = 0;
     map &here = get_map();
-    for( const tripoint &tmp : here.points_in_radius( p, 12 ) ) {
+    for( const tripoint &tmp : here.points_in_radius( p, 23 ) ) {
         const auto t = here.ter( tmp );
         if( t == ter_t_gas_pump || t == ter_t_gas_pump_a ) {
-            result++;
-            fuel_type = FUEL_TYPE_GASOLINE;
+            if( ( fuel_type == FUEL_TYPE_GASOLINE ) || ( fuel_type == FUEL_TYPE_NONE ) ) {
+                result++;
+                fuel_type = FUEL_TYPE_GASOLINE;
+            }
         } else if( t == ter_t_diesel_pump || t == ter_t_diesel_pump_a ) {
-            result++;
-            fuel_type = FUEL_TYPE_DIESEL;
+            if( ( fuel_type == FUEL_TYPE_DIESEL ) || ( fuel_type == FUEL_TYPE_NONE ) ) {
+                result++;
+                fuel_type = FUEL_TYPE_DIESEL;
+            }
         }
     }
     return result;
+}
+
+fuel_station_fuel_type iexamine::getNearestPumpType( const tripoint &center )
+{
+    map &here = get_map();
+    for( const tripoint &tmp : closest_points_first( center, 23 ) ) {
+        auto t = here.ter( tmp );
+        if( t == ter_t_gas_pump || t == ter_t_gas_pump_a ) {
+            return FUEL_TYPE_GASOLINE;
+        } else if( t == ter_t_diesel_pump || t == ter_t_diesel_pump_a ) {
+            return FUEL_TYPE_DIESEL;
+        }
+    }
+    return FUEL_TYPE_NONE;
 }
 
 cata::optional<tripoint> iexamine::getNearFilledGasTank( const tripoint &center, int &fuel_units,
@@ -4556,20 +4574,20 @@ void iexamine::pay_gas( Character &you, const tripoint &examp )
         popup( _( "You're illiterate, and can't read the screen." ) );
     }
 
-    fuel_station_fuel_type fuelType = FUEL_TYPE_NONE;
+    fuel_station_fuel_type fuelType = iexamine::getNearestPumpType( examp );
     std::string fuelTypeStr;
     int pumpCount = getNearPumpCount( examp, fuelType );
     fuelTypeStr = fuelType == FUEL_TYPE_GASOLINE ? _( "gasoline" ) : fuelType == FUEL_TYPE_DIESEL ?
                   _( "diesel" ) : "";
     if( pumpCount == 0 ) {
-        popup( str_to_illiterate_str( string_format( _( "Failure!  No %s pumps found!" ), fuelTypeStr ) ) );
+        popup( str_to_illiterate_str( string_format( _( "Error!  No %s pumps found!" ), fuelTypeStr ) ) );
         return;
     }
 
     int tankUnits;
     const cata::optional<tripoint> pTank_ = getNearFilledGasTank( examp, tankUnits, fuelType );
     if( !pTank_ ) {
-        popup( str_to_illiterate_str( string_format( _( "Failure!  No %s tank found!" ), fuelTypeStr ) ) );
+        popup( str_to_illiterate_str( string_format( _( "Error!  No %s tank found!" ), fuelTypeStr ) ) );
         return;
     }
     const tripoint pTank = *pTank_;

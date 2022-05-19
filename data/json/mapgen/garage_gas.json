@@ -13,23 +13,23 @@
         "ss__________________________________________________________s...........",
         "ss_________________________________________________________ss...........",
         "ss_____________________ssssssssssssss__________s__________sss...........",
-        "ss___________|________ssssssssssssllse________sss________esssss.........",
+        "ss___________|________ssssssssssssssse________sss________esssss.........",
         "ss___________&________sss|-www-www-|--========---========---|sssss......",
-        "ss___________|________ssswrrrr rrrr| e                   e  |ssssss.....",
-        "ss___________s________sssw         [           |           r|---|ss.....",
-        "ss___________s________ssD|r cc     [                       r|t S|ss.....",
-        "ss___________s________sss[      cc |                       r|R  +ss.....",
+        "ss___________|________ssswrrrr$rrrr| e                   e  |ssssss.....",
+        "ss___________C________sssw         [           |           r|---|ss.....",
+        "ss___________s________sss|r cc     [                       r|t S|ss.....",
+        "ss___________C________sss[      cc |                       r|R  +ss.....",
         "ss___________|________sss[      c  |r                      c|---|ss.....",
-        "ss___________&________ssD|r     c  |r          |           c|t  +ss.....",
+        "ss___________%________sss|r     c  |r          |           c|t  +ss.....",
         "_s___________|________sssw      c r|r                      r|S R|s......",
         "______________________sssw rrr  c r|r                      r|---|s......",
         "______________________sss| rrr  |+-|                        !sssss......",
         "______________________sssw      |  +           |            wss.........",
         "______________________sssw      | z|-www-+-|                wss.........",
-        "______________________sss|[[[[[[| z| kkk  P|rrcccrrrrcccrrrr|...........",
-        "______________________sss|rrrrrr| z|  h    |--www----www----|...........",
-        "_______________________ss|      +  |    ooo|4...........................",
-        "______________________...|---------|-------|............................",
+        "______________________^/^|[[[[[[| z| kkk  P|rrcccrrrrcccrrrr|...........",
+        "______________________:ss|rrrrrr| z|  h    |--www----www----|...........",
+        "______________________:ss|      +  |    ooo|4...........................",
+        "______________________^^^|---------|-------|............................",
         "_s......................................................................"
       ],
       "set": [
@@ -49,14 +49,18 @@
         "[": "t_laminated_door_glass_c",
         "_": "t_pavement",
         "e": "t_gates_mech_control",
-        "l": "t_sidewalk",
         "s": "t_sidewalk",
-        "&": "t_sidewalk",
-        "D": "t_sidewalk",
         "4": "t_gutter_downspout",
-        "w": "t_laminated_glass"
+        "w": "t_laminated_glass",
+        "&": "t_gas_pump",
+        "$": "t_atm",
+        "%": "t_diesel_pump_a",
+        "/": "t_chaingate_l",
+        "^": "t_chainfence_h",
+        ":": "t_chainfence_v"
       },
       "furniture": {
+        "C": "f_aut_gas_console",
         "P": "f_indoor_plant",
         "D": "f_trashcan",
         "R": "f_trashcan",
@@ -69,8 +73,13 @@
         "z": "f_crate_c",
         "S": "f_sink"
       },
-      "gaspumps": { "&": {  } },
       "toilets": { "t": {  } },
+      "place_furniture": [
+        { "furn": "f_gas_tank", "x": 24, "y": 20 },
+        { "furn": "f_diesel_tank", "x": 24, "y": 21 },
+        { "furn": "f_trashcan", "x": 24, "y": 10 },
+        { "furn": "f_trashcan", "x": 24, "y": 13 }
+      ],
       "place_vendingmachines": [
         { "item_group": "vending_food", "x": 31, "y": 6, "lootable": true },
         { "item_group": "vending_drink", "x": 32, "y": 6, "lootable": true }
@@ -107,6 +116,10 @@
         { "vehicle": "suburban_home", "x": 17, "y": [ 12, 13 ], "chance": 30, "rotation": 270 },
         { "vehicle": "garage", "x": 41, "y": [ 12, 13 ], "chance": 20, "rotation": 270 },
         { "vehicle": "garage", "x": 51, "y": [ 12, 13 ], "chance": 20, "rotation": 270 }
+      ],
+      "place_liquids": [
+        { "liquid": "gasoline", "x": 24, "y": 20, "repeat": [ 100, 500 ] },
+        { "liquid": "diesel", "x": 24, "y": 21, "repeat": [ 100, 500 ] }
       ]
     }
   },

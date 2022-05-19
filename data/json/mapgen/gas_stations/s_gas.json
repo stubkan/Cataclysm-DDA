@@ -35,6 +35,8 @@
       "place_furniture": [ { "furn": "f_gas_tank", "x": 2, "y": 3 }, { "furn": "f_diesel_tank", "x": 4, "y": 3 } ],
       "terrain": {
         "&": "t_atm",
+        "G": "t_gas_pump",
+        "D": "t_diesel_pump_a",
         "+": "t_chaingate_l",
         "-": "t_chainfence_h",
         ".": "t_pavement",
@@ -42,7 +44,6 @@
         "s": "t_little_column",
         "|": "t_chainfence_v"
       },
-      "gaspumps": { "G": { "fuel": "gasoline" }, "D": { "fuel": "diesel" } },
       "furniture": { "9": "f_aut_gas_console" },
       "signs": { "P": { "signage": "Danger!  Do not smoke!  Risk of explosion!" } },
       "vendingmachines": { "1": { "item_group": "vending_drink", "lootable": true }, "2": { "item_group": "vending_food", "lootable": true } },
@@ -62,11 +63,11 @@
       "rows": [
         "____:]:____:____:]:____]",
         "____]]]____:____]]]____]",
-        "____!#!____:____!#!____]",
+        "____m#i____:____m#!____]",
         "____]]]____:____]]]____]",
         "____:]:____:____:]:____]",
         "____]]]____:____]]]____]",
-        "____!#!____:____!#!____]",
+        "____m#!____:____m#!____]",
         "____]]]____:____]]]____]",
         "____:]:____:____:]:____]",
         "]]]]]]]]]]]]]]]]]]]]]]]]",
@@ -86,7 +87,8 @@
         " 4      ]]]]]]]]]]]]]]]]"
       ],
       "palettes": [ "road" ],
-      "terrain": { "P": "t_sidewalk", "4": "t_gutter_downspout" },
+      "terrain": { "!": "t_gas_pump", "i": "t_diesel_pump_a", "P": "t_sidewalk", "4": "t_gutter_downspout" },
+      "furniture": { "m": "f_aut_gas_console" },
       "signs": { "P": { "signage": "Wide selection of storage batteries!  Discounts!" } },
       "items": { "l": { "item": "cleaning", "chance": 70 }, "&": { "item": "trash_cart", "chance": 50 } },
       "place_loot": [
@@ -103,6 +105,11 @@
         { "group": "bed", "x": [ 15, 16 ], "y": 21, "chance": 70 },
         { "item": "microwave", "x": 19, "y": 21, "chance": 80 },
         { "item": "laptop", "x": 11, "y": 18, "chance": 70 }
+      ],
+      "place_furniture": [ { "furn": "f_gas_tank", "x": 23, "y": 12 }, { "furn": "f_diesel_tank", "x": 23, "y": 13 } ],
+      "place_liquids": [
+        { "liquid": "gasoline", "x": 23, "y": 12, "repeat": [ 200, 1000 ] },
+        { "liquid": "diesel", "x": 23, "y": 13, "repeat": [ 200, 1000 ] }
       ],
       "place_monsters": [ { "monster": "GROUP_ZOMBIE", "x": [ 2, 20 ], "y": [ 16, 17 ], "chance": 2 } ]
     }
@@ -176,13 +183,13 @@
         "________________________",
         "........................",
         ".#~~~~~~~#    #~~~~~~~#.",
-        ".[                    [.",
+        ".[       o    o       [.",
         ".####0#####33#####0####.",
         ".#9999  99      >S   9#.",
         ".#      99      >    9#.",
         ".#9999  99      >     #.",
         ".#              >  >>>#.",
-        ".#FFFFFFFF            #.",
+        ".#FFFFFFFF           $#.",
         ".###########3#######  #.",
         ".#@@  BC#;R# 66 6F>#3##.",
         ".#@@   C#  3 B    ># ;#.",
@@ -196,8 +203,12 @@
         { "point": "terrain", "id": "t_dirt", "x": [ 0, 23 ], "y": [ 0, 2 ], "repeat": [ 8, 10 ] },
         { "point": "terrain", "id": "t_dirt", "x": [ 0, 23 ], "y": [ 0, 4 ], "repeat": [ 8, 2 ] }
       ],
+      "place_furniture": [ { "furn": "f_gas_tank", "x": 20, "y": 11 }, { "furn": "f_diesel_tank", "x": 21, "y": 11 } ],
       "terrain": {
         " ": "t_floor",
+        "$": "t_atm",
+        "G": "t_gas_pump",
+        "D": "t_diesel_pump_a",
         "#": "t_wall_log",
         ".": "t_grass",
         "0": "t_curtains",
@@ -211,6 +222,7 @@
       },
       "furniture": {
         "6": "f_table",
+        "o": "f_aut_gas_console",
         "9": "f_rack",
         ":": "f_dresser",
         "=": "f_woodstove",
@@ -226,7 +238,6 @@
         "R": "f_shower"
       },
       "toilets": { ";": {  } },
-      "gaspumps": { "G": { "fuel": "gasoline" }, "D": { "fuel": "diesel" } },
       "place_items": [
         { "item": "bed", "x": [ 2, 3 ], "y": [ 19, 20 ], "chance": 80 },
         { "item": "dresser", "x": 2, "y": 21, "chance": 80 },
@@ -245,6 +256,10 @@
         { "item": "shotgun_s", "x": 3, "y": 20 },
         { "item": "pot", "x": 18, "y": 21 },
         { "item": "shot_00", "x": 7, "y": 19, "chance": 50 }
+      ],
+      "place_liquids": [
+        { "liquid": "gasoline", "x": 20, "y": 11, "repeat": [ 50, 275 ] },
+        { "liquid": "diesel", "x": 21, "y": 11, "repeat": [ 50, 275 ] }
       ]
     }
   },

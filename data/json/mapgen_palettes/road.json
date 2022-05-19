@@ -34,7 +34,6 @@
       "T": "f_toilet"
     },
     "toilets": { "T": {  } },
-    "gaspumps": { "!": {  } },
     "vendingmachines": { "D": { "item_group": "vending_drink" }, "F": { "item_group": "vending_food" } }
   }
 ]
