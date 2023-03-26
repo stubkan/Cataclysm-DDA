@@ -69,7 +69,11 @@ char vehicle::part_sym( const int p, const bool exact, const bool include_fake )
 
 // similar to part_sym(int p) but for use when drawing SDL tiles. Called only by cata_tiles
 // during draw_vpart vector returns at least 1 element, max of 2 elements. If 2 elements the
-// second denotes if it is open or damaged
+// second denotes if it is open or damaged and bloodstain level
+//          no blood   light blood   heavy blood
+// normal      0            5            6
+// open        1            3            3
+// broken      2            4            4
 std::string vehicle::part_id_string( const int p, char &part_mod, bool below_roof, bool roof ) const
 {
     part_mod = 0;
@@ -88,9 +92,31 @@ std::string vehicle::part_id_string( const int p, char &part_mod, bool below_roo
     if( part_flag( displayed_part, VPFLAG_OPENABLE ) && vp.open ) {
         // open
         part_mod = 1;
+        if( vp.blood > 0 ) {
+            // open and blooded
+            part_mod = 3;
+        } else {
+            // open
+            part_mod = 1;
+        }
     } else if( vp.is_broken() ) {
         // broken
         part_mod = 2;
+        if( vp.blood > 0 ) {
+            // broken and blooded
+            part_mod = 4;
+        } else {
+            // broken
+            part_mod = 2;
+        }
+    } else {
+        if( vp.blood > 200 ) {
+            // normal and heavy blood
+            part_mod = 6;
+        } else if( vp.blood > 0 ) {
+            // normal and light blood
+            part_mod = 5;
+        }
     }
 
     return vp.id.str() + ( vp.variant.empty() ?  "" : "_" + vp.variant );
