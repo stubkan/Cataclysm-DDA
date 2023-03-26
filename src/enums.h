@@ -412,10 +412,10 @@ enum MULTITILE_TYPE {
     unconnected,
     open_,
     broken,
-    blooded_open_,
-    blooded_broken,
-    lightblood,
-    heavyblood,
+    open_blood,
+    broken_blood,
+    blood_light,
+    blood_heavy,
     num_multitile_types
 };
 
