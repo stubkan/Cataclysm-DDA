@@ -2172,6 +2172,7 @@ void npc::shop_restock()
         }
 
         // This removes some items according to item spawn scaling factor
+        // Add further removal based on ITEM_SCAVENGERATE
         const float spawn_rate = get_option<float>( "ITEM_SPAWNRATE" );
         if( spawn_rate < 1 ) {
             ret.remove_if( [spawn_rate]( auto & ) {

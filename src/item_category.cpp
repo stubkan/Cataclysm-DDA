@@ -123,3 +123,8 @@ float item_category::get_spawn_rate() const
 {
     return spawn_rate;
 }
+
+float item_category::get_scavenge_rate() const
+{
+    return scavenge_rate;
+}

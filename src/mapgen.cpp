@@ -2673,6 +2673,7 @@ class jmapgen_spawn_item : public jmapgen_piece
             const int c = chance.get();
 
             // 100% chance = exactly 1 item, otherwise scale by item spawn rate.
+            // TODO Add small ITEM_SCAVENGERATE removal chance
             const float spawn_rate = get_option<float>( "ITEM_SPAWNRATE" );
             int spawn_count = ( c == 100 ) ? 1 : roll_remainder( c * spawn_rate / 100.0f );
             for( int i = 0; i < spawn_count; i++ ) {
@@ -3202,6 +3203,7 @@ class jmapgen_sealed_item : public jmapgen_piece
 
             // 100% chance = always generate, otherwise scale by item spawn rate.
             // (except is capped at 1)
+            // TODO Add ITEM_SCAVENGERATE chances
             const float spawn_rate = get_option<float>( "ITEM_SPAWNRATE" );
             if( !x_in_y( ( c == 100 ) ? 1 : c * spawn_rate / 100.0f, 1 ) ) {
                 return;
@@ -3710,6 +3712,7 @@ void jmapgen_objects::load_objects<jmapgen_loot>(
 
         auto loot = make_shared_fast<jmapgen_loot>( jsi );
         // spawn rates < 1 are handled in item_group
+        // TODO Add ITEM_SCAVENGERATE adjustment as well
         const float rate = std::max( get_option<float>( "ITEM_SPAWNRATE" ), 1.0f );
 
         if( where.repeat.valmax != 1 ) {
@@ -6463,6 +6466,7 @@ std::vector<item *> map::place_items(
     }
 
     // spawn rates < 1 are handled in item_group
+    // TODO Add ITEM_SCAVENGERATE adjustments
     const float spawn_rate = std::max( get_option<float>( "ITEM_SPAWNRATE" ), 1.0f ) ;
     const int spawn_count = roll_remainder( chance * spawn_rate / 100.0f );
     for( int i = 0; i < spawn_count; i++ ) {
@@ -6521,6 +6525,9 @@ std::vector<item *> map::place_items(
                             }
                         }
                     }
+                }
+                if ( item_cat_scavenge_rate > 0f ) {
+                    // Adjust items based on scavenge rate and time elapsed
                 }
             }
         }

@@ -226,6 +226,7 @@ std::size_t Single_item_creator::create( ItemList &list,
                       modifier_count.first, modifier_count.second );
         }
     }
+    // TODO Investigate ITEM_SCAVENGERATE addition
     float spawn_rate = get_option<float>( "ITEM_SPAWNRATE" );
     for( ; cnt > 0; cnt-- ) {
         if( type == S_ITEM ) {

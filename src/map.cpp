@@ -4939,6 +4939,14 @@ float map::item_category_spawn_rate( const item &itm )
     return spawn_rate > 1.0f ? roll_remainder( spawn_rate ) : spawn_rate;
 }
 
+float map::item_category_scavenge_rate( const item &itm )
+{
+    const item_category_id &cat = itm.get_category_of_contents().id;
+    const float scavenge_rate = cat.obj().get_scavenge_rate();
+
+    return scavenge_rate > 1.0f ? roll_remainder( scavenge_rate ) : scavenge_rate;
+}
+
 item &map::add_item( const tripoint &p, item new_item )
 {
     if( item_is_blacklisted( new_item.typeId() ) ) {

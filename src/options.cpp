@@ -2540,6 +2540,11 @@ void options_manager::add_options_world_default()
          to_translation( "A scaling factor that determines density of item spawns.  A higher number means more items." ),
          0.01, 10.0, 1.0, 0.01
        );
+    
+    add( "ITEM_SCAVENGERATE", "world_default", to_translation( "Background scavenging factor" ),
+         to_translation( "A scaling factor that determines the amount of background scavenging.  A higher number means less items in time." ),
+         0.1, 10.0, 1.0, 0.1
+       );
 
     add( "NPC_SPAWNTIME", "world_default", to_translation( "Random NPC spawn time" ),
          to_translation( "Baseline average number of days between random NPC spawns.  Average duration goes up with the number of NPCs already spawned.  A higher number means fewer NPCs.  Set to 0 days to disable random NPCs." ),
