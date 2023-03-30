@@ -82,7 +82,7 @@ static const trap_str_id tr_unfinished_construction( "tr_unfinished_construction
 static const std::string ITEM_HIGHLIGHT( "highlight_item" );
 static const std::string ZOMBIE_REVIVAL_INDICATOR( "zombie_revival_indicator" );
 
-static const std::array<std::string, 8> multitile_keys = {{
+static const std::array<std::string, 12> multitile_keys = {{
         "center",
         "corner",
         "edge",
@@ -90,7 +90,11 @@ static const std::array<std::string, 8> multitile_keys = {{
         "end_piece",
         "unconnected",
         "open",
-        "broken"
+        "broken",
+        "open_blood",
+        "broken_blood",
+        "blood_light",
+        "blood_heavy"
     }
 };
 
@@ -2153,9 +2157,9 @@ bool cata_tiles::draw_from_id_string_internal( const std::string &id, TILE_CATEG
             if( vpid.is_valid() ) {
                 const vpart_info &v = vpid.obj();
 
-                if( subtile == open_ ) {
+                if( ( subtile == ( open_ ) || ( open_blood ) ) ) {
                     sym = '\'';
-                } else if( subtile == broken ) {
+                } else if( ( subtile == ( broken ) || ( broken_blood ) ) ) {
                     sym = v.sym_broken;
                 } else {
                     sym = v.sym;
@@ -2322,6 +2326,16 @@ bool cata_tiles::draw_from_id_string_internal( const std::string &id, TILE_CATEG
     if( subtile != -1 && display_tile.multitile ) {
         const auto &display_subtiles = display_tile.available_subtiles;
         const auto end = std::end( display_subtiles );
+        // run tileset redundancy checks for open/broken blood sprites
+        if( subtile == 8 ) {
+            if( !tileset_ptr->find_tile_type( found_id + "_open_blood" ) ) {
+                subtile = 6;
+            }
+        } else if( subtile == 9 ) {
+            if( !tileset_ptr->find_tile_type( found_id + "_broken_blood" ) ) {
+                subtile = 7;
+            }
+        }
         if( std::find( begin( display_subtiles ), end, multitile_keys[subtile] ) != end ) {
             // append subtile name to tile and re-find display_tile
             return draw_from_id_string_internal(
@@ -3500,10 +3514,23 @@ bool cata_tiles::draw_vpart( const tripoint &p, lit_level ll, int &height_3d,
         // Gets the visible part, should work fine once tileset vp_ids are updated to work
         // with the vehicle part json ids
         // get the vpart_id
+        //
+        // part_mod number guide
+        //          no blood   light blood   heavy blood
+        // normal      0            5            6
+        // open        1            3            3
+        // broken      2            4            4
+
         char part_mod = 0;
         const std::string &vp_id = veh.part_id_string( veh_part, part_mod, !roof, roof );
         if( !vp_id.empty() ) {
-            const int subtile = part_mod == 1 ? open_ : part_mod == 2 ? broken : 0;
+            const int subtile = part_mod == 1 ? open_
+                                : part_mod == 2 ? broken
+                                : part_mod == 3 ? open_blood
+                                : part_mod == 4 ? broken_blood
+                                : part_mod == 5 ? blood_light
+                                : part_mod == 6 ? blood_heavy
+                                : 0;
             const int rotation = std::round( to_degrees( veh.face.dir() ) );
             const std::string vpname = "vp_" + vp_id;
             avatar &you = get_avatar();
@@ -3537,7 +3564,13 @@ bool cata_tiles::draw_vpart( const tripoint &p, lit_level ll, int &height_3d,
         const vpart_id &vp2 = std::get<0>( override->second );
         if( vp2 ) {
             const char part_mod = std::get<1>( override->second );
-            const int subtile = part_mod == 1 ? open_ : part_mod == 2 ? broken : 0;
+            const int subtile = part_mod == 1 ? open_
+                                : part_mod == 2 ? broken
+                                : part_mod == 3 ? open_blood
+                                : part_mod == 4 ? broken_blood
+                                : part_mod == 5 ? blood_light
+                                : part_mod == 6 ? blood_heavy
+                                : 0;
             const units::angle rotation = std::get<2>( override->second );
             const int draw_highlight = std::get<3>( override->second );
             const std::string vpname = "vp_" + vp2.str();
