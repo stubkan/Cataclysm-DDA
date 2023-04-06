@@ -130,7 +130,7 @@
     "flags": [ "DURABLE_MELEE", "BELT_CLIP" ],
     "weapon_category": [ "BATONS", "FENCING_WEAPONRY" ],
     "use_action": { "menu_text": "Collapse", "type": "transform", "target": "baton", "msg": "You collapse your baton." },
-    "bashing": 10,
+    "bashing": 18,
     "price": 22900
   },
   {
@@ -1184,7 +1184,7 @@
     "use_action": { "menu_text": "Retract", "type": "transform", "target": "PR24-retracted", "msg": "You collapse your PR-24 baton." },
     "volume": "2 L",
     "longest_side": "60 cm",
-    "bashing": 14,
+    "bashing": 22,
     "to_hit": { "grip": "weapon", "length": "long", "surface": "any", "balance": "good" },
     "price": 30000,
     "price_postapoc": 750
