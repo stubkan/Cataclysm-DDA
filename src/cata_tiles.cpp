@@ -3526,10 +3526,10 @@ bool cata_tiles::draw_vpart( const tripoint &p, lit_level ll, int &height_3d,
         if( !vp_id.empty() ) {
             const int subtile = part_mod == 1 ? open_
                                 : part_mod == 2 ? broken
-                                : part_mod == 3 ? blooded_open
-                                : part_mod == 4 ? blooded_broken
-                                : part_mod == 5 ? lightblood
-                                : part_mod == 6 ? heavyblood
+                                : part_mod == 3 ? open_blood
+                                : part_mod == 4 ? broken_blood
+                                : part_mod == 5 ? blood_light
+                                : part_mod == 6 ? blood_heavy
                                 : 0;
             const int rotation = std::round( to_degrees( veh.face.dir() ) );
             const std::string vpname = "vp_" + vp_id;
