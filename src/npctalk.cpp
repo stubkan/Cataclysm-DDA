@@ -1017,12 +1017,14 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
     const bool has_mind_control = has_trait( trait_DEBUG_MIND_CONTROL );
     
     // check ability to converse exists (deafness, muteness, sedation, etc)
+/* PLACEHOLDER PLACEHOLDER
     if ( !is_computer && is_not_conversation ) {
         if !can_talk( get_talker_for(*this), talk_with) {
-
+            add_msg( _( "You are unable to talk to %1$s." ), talk_with->name );
             return;
         }
     }
+*/
     
     if( !talk_with->will_talk_to_u( *this, has_mind_control ) ) {
         return;
