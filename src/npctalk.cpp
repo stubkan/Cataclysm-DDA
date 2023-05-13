@@ -1015,6 +1015,15 @@ void avatar::talk_to( std::unique_ptr<talker> talk_with, bool radio_contact,
                       bool is_computer, bool is_not_conversation )
 {
     const bool has_mind_control = has_trait( trait_DEBUG_MIND_CONTROL );
+    
+    // check ability to converse exists (deafness, muteness, sedation, etc)
+    if ( !is_computer && is_not_conversation ) {
+        if !can_talk( get_talker_for(*this), talk_with) {
+
+            return;
+        }
+    }
+    
     if( !talk_with->will_talk_to_u( *this, has_mind_control ) ) {
         return;
     }
@@ -1089,27 +1098,7 @@ std::string dialogue::dynamic_line( const talk_topic &the_topic )
         }
     }
 
-    if( topic == "TALK_NPC_NOFACE" ) {
-        return string_format( _( "&%s stays silent." ), actor( true )->disp_name() );
-    }
-
-    if( topic == "TALK_NOFACE" ) {
-        return _( "&You can't talk without your face." );
-    } else if( topic == "TALK_DEAF" ) {
-        return _( "&You are deaf and can't talk." );
-
-    } else if( topic == "TALK_DEAF_ANGRY" ) {
-        return string_format(
-                   _( "&You are deaf and can't talk.  When you don't respond, %s becomes angry!" ),
-                   actor( true )->disp_name() );
-    } else if( topic == "TALK_MUTE" ) {
-        return _( "&You are mute and can't talk." );
-
-    } else if( topic == "TALK_MUTE_ANGRY" ) {
-        return string_format(
-                   _( "&You are mute and can't talk.  When you don't respond, %s becomes angry!" ),
-                   actor( true )->disp_name() );
-    } else if( topic == "TALK_CHURL" ) {
+    if( topic == "TALK_CHURL" ) {
         return string_format(
                    _( "&Thou art but a lowley churl and ye know not this newe tongue.  %s seems unable to understand what you're saying." ),
                    actor( true )->disp_name() );

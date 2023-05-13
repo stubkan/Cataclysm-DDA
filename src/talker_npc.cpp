@@ -171,24 +171,6 @@ std::vector<std::string> talker_npc::get_topics( bool radio_contact )
     }
     me_npc->moves -= 100;
 
-    if( player_character.is_deaf() ) {
-        if( add_topics.back() == me_npc->chatbin.talk_mug ||
-            add_topics.back() == me_npc->chatbin.talk_stranger_aggressive ) {
-            me_npc->make_angry();
-            add_topics.emplace_back( "TALK_DEAF_ANGRY" );
-        } else {
-            add_topics.emplace_back( "TALK_DEAF" );
-        }
-    }
-    if( player_character.is_mute() ) {
-        if( add_topics.back() == me_npc->chatbin.talk_mug ||
-            add_topics.back() == me_npc->chatbin.talk_stranger_aggressive ) {
-            me_npc->make_angry();
-            add_topics.emplace_back( "TALK_MUTE_ANGRY" );
-        } else {
-            add_topics.emplace_back( "TALK_MUTE" );
-        }
-    }
     if( player_character.has_trait( trait_PROF_CHURL ) ) {
         if( add_topics.back() == me_npc->chatbin.talk_mug ||
             add_topics.back() == me_npc->chatbin.talk_stranger_aggressive ) {
@@ -202,11 +184,6 @@ std::vector<std::string> talker_npc::get_topics( bool radio_contact )
         }
     }
 
-    if( me_npc->has_trait( trait_PROF_FOODP ) &&
-        !( me_npc->is_wearing( itype_foodperson_mask_on ) ||
-           me_npc->is_wearing( itype_foodperson_mask ) ) ) {
-        add_topics.emplace_back( "TALK_NPC_NOFACE" );
-    }
     me_npc->decide_needs();
 
     return add_topics;
